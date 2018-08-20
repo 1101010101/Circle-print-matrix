@@ -1,0 +1,81 @@
+//转圈打印矩阵 
+//【题目】 给定一个整型矩阵matrix，请按照转圈的方式打印它。
+//例如： 
+//1   2   3   4 
+//5   6   7   8 
+//9  10  11  12 
+//13 14  15  16 
+//打印结果为：
+//1，2，3，4，8，12，16，15，14，13，9， 5，6，7，11， 10 
+//【要求】 额外空间复杂度为O(1)。
+
+#include<iostream>
+#include<stdlib.h>
+#include<vector>
+using namespace std;
+
+void spiral(vector<vector<int>> &m);
+void printEdge(vector<vector<int>> &m, int tc, int tr, int dc, int dr);
+
+int main()
+{
+	int a[] = { 1, 2, 3, 4 };
+	vector<int> ivec(a, a + 4);
+	vector<vector<int> > m;
+	m.push_back(ivec);
+	ivec[0] = 5;
+	ivec[1] = 6;
+	ivec[2] = 7;
+	ivec[3] = 8;
+	m.push_back(ivec);
+	ivec[0] = 9;
+	ivec[1] = 10;
+	ivec[2] = 11;
+	ivec[3] = 12;
+	m.push_back(ivec);
+	ivec[0] = 13;
+	ivec[1] = 14;
+	ivec[2] = 15;
+	ivec[3] = 16;
+	m.push_back(ivec);
+	spiral(m);
+	system("pause");
+	return 0;
+}
+
+void printEdge(vector<vector<int>> &m ,int tr,int tc,int dr,int dc)
+{
+	if (tr == dr)
+	{
+		for (int i(tr); i < dr; i++)
+			cout << m[tr][i] << ",";
+	}
+	else if (tc == dc)
+	{
+		for (int i(tc); i < dc; ++i)
+			cout << m[i][tc] << ",";
+	}
+	else
+	{
+		int curR(tr);
+		int curC(tc);
+		while (curC != dc)
+			cout << m[curR][curC++] << ",";
+		while (curR != dr)
+			cout << m[curR++][curC] << ",";
+		while (curC != tc)
+			cout << m[curR][curC--] << ",";
+		while (curR != tr)
+			cout << m[curR--][curC] << ",";
+	}
+}
+
+void spiral(vector<vector<int>> &m)
+{
+	int tr(0), tc(0);
+	int dr = m.size() - 1, dc = m[0].size() - 1;
+	while (tr <= dr && tc <= dc)
+	{
+		printEdge(m, tr++, tc++, dr--, dc--);
+	}
+}
